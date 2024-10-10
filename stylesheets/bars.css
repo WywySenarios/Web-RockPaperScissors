@@ -52,7 +52,7 @@
     aspect-ratio: 1;
 }
 
-.top-bar button {
+.top-bar input[type="button"] {
     height: 75px;
     width: 100px;
     padding: 0px;

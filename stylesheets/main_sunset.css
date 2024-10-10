@@ -8,17 +8,29 @@ head {
 
 body {
     font-family: monospace;
-    background-color: #f0a383;
+    background: linear-gradient(3deg, #f0a383 0%, #de5568 100%);
 }
 
 /* COLORS GALORE */
 
-.top-bar button {
+.top-bar {
+    background-color: #de5568;
+}
+
+.top-bar input[type="button"] {
     background-color: unset;
 }
 
-.top-bar button:hover {
+.top-bar input[type="button"]:hover {
     background-color: #cd2561;
+}
+
+.top-bar input[type="text"] {
+    background-color:#f0a383;
+}
+
+footer {
+    background: linear-gradient(to right, #fffef0, #fae4b9);
 }
 
 /* Animations START */

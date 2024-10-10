@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-</head>
-
-<body>
-
-</body>
-
-</html>
+function run() {
+    console.log("Horray!");
+}
