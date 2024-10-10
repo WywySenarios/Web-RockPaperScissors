@@ -1,0 +1,151 @@
+/* Universal */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* IDK how this works, but it fixes top-bar problem of having a weird "right-shift"! */
+
+/* .buttons {
+    display: flex;
+    gap: 10px; space between buttons 
+} */
+
+/* Main content */
+
+.mainContent {
+    margin-top: 75px;
+    padding: 10px;
+    min-height: calc(100vh - 75px - 75px); /* screen height - top bar - footer*/
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+}
+
+/* .mainContent a {
+    color: black;
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+} */
+
+/* Top bar */
+
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    height: 75px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    z-index: 1;
+}
+
+.top-bar img {
+    height: calc(75px - 20px - 20px); /* height - padding*/
+    aspect-ratio: 1;
+}
+
+.top-bar button {
+    height: 75px;
+    width: 100px;
+    padding: 0px;
+    border: none;
+    cursor: pointer;
+}
+
+.top-bar input[type="text"] {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    /* background-color: #fff; */
+    border: none;
+    color: #000;
+    border-radius: 5px;
+}
+
+/* Footer */
+
+footer {
+    padding: 20px;
+    height: 75px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    z-index: 1;
+    overflow: hidden;
+}
+
+/* Sidebar */
+/* .sidebar {
+    left: 0;
+    position: fixed;
+    width: 120px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} */
+
+/* .menu-icon {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 24px;
+    padding-bottom: 20px;
+} */
+
+/* .menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+} */
+
+/* BOTTOM BAR CHAD ELEMENTS*/
+/* .music-controls-container {
+    width: 100%;
+    position: fixed;
+    bottom: 2%;
+    padding: 0 10px;
+}
+
+.music-controls {
+    border-radius: 5px;
+    width: 100%;
+    height: 100px;
+    padding: 5px;
+     background-color: #fff; 
+    display: flex;
+}
+
+.music-controls .track-info {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    gap: 10px;
+    color: #000;
+} */
+
+/* 
+ JS integrated stuff
+
+.controls{
+    width: min(20%, 200px);
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    margin-left: calc(50% - 120px);
+} */

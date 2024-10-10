@@ -1,0 +1,48 @@
+.container {
+    --bgColor: #fae4b9;
+}
+
+head {
+    font-family: monospace;
+}
+
+body {
+    font-family: monospace;
+    background-color: #f0a383;
+}
+
+/* COLORS GALORE */
+
+.top-bar button {
+    background-color: unset;
+}
+
+.top-bar button:hover {
+    background-color: #cd2561;
+}
+
+/* Animations START */
+
+.mainContent {
+    animation-duration: 1.5s;
+    animation-name: appear;
+}
+
+.top-bar {
+    animation-duration: 1.5s;
+    animation-name: appear;
+}
+
+@keyframes appear {
+    from {
+        translate: 0 10px;
+        opacity: 0%;
+    }
+
+    to {
+        translate: 0 0;
+        opacity: 100%;
+    }
+}
+
+/* Animations END */
