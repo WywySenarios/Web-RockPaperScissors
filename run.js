@@ -36,9 +36,9 @@ function run() {
 	sleep(1000);
 
 
-	// map
+	// zeroes
 	start = performance.now();
-	results.push(RPSmap(games));
+	results.push(RPSzeroes(games));
 	end = performance.now();
 	runtime = end - start;
 	console.log(`${runtime}ms`);
@@ -112,7 +112,7 @@ function RPSoptimized(games) {
 }
 
 // Returns an array with the execution results
-function RPSmap(games) {
+function RPSzeroes(games) {
 	let results = Array(0);
 
 	for (let i = 0; i < games.length; i++) {
