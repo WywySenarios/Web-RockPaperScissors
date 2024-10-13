@@ -54,11 +54,24 @@ function run() {
 	console.log(results[0]);
 	sleep(1000);
 	// μ
+
+	// send results to server
+	const fd = new FormData();
+
+	fd.append("standard", results[0]);
+
+	fetch("/upload", {
+		method: "POST",
+		body: "bro stop trying so hard",
+	});
+
+	// note that this function is complete.
+	console.log("'Run' Complete.");
 }
 
 function sleep(ms) {
 	let a = new Promise(resolve => setTimeout(resolve, ms));
-	a.then(() => {return;});
+	a.then(() => { return; });
 }
 
 // Returns an array with the execution results

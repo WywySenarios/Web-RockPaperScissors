@@ -16,7 +16,7 @@
 
         <!-- Buttons -->
         <!-- Made thanks to : https://stackoverflow.com/questions/2906582/how-do-i-create-an-html-button-that-acts-like-a-link -->
-        <input type="button" onclick="location.href='main.html';"value="Home"></input>
+        <input type="button" onclick="location.href='index.html';"value="Home"></input>
         <input type="button" onclick="location.href='visualization.html';" value="Results"></input>
         <input type="button"  value="Play"></input>
 
@@ -26,10 +26,11 @@
 
     <!-- Main content -->
     <div class="mainContent">
-        <input type="button" onclick="run()" value="Run">
+        <input type="button" id="run" onclick="run()" value="Run">
 
         <table>
             <tr>
+                <th></th>
                 <th>Standard Algorithm</th>
                 <th>Optimized Algorithm</th>
                 <th>Zeroes Algorithm</th>
@@ -37,9 +38,36 @@
             </tr>
 
             <tr>
-                <th>Ho</th>
+                <th>Runtime (ms/100 cases)</th>
+                <th id="standard100"></th>
+                <th id="optimized100"></th>
+                <th id="zeroes100"></th>
+                <th id="polynomial100"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/1000 cases)</th>
+                <th id="standard1000"></th>
+                <th id="optimized1000"></th>
+                <th id="zeroes1000"></th>
+                <th id="polynomial1000"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/10000 cases)</th>
+                <th id="standard10000"></th>
+                <th id="optimized10000"></th>
+                <th id="zeroes10000"></th>
+                <th id="polynomial10000"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/100000 cases)</th>
+                <th id="standard100000"></th>
+                <th id="optimized100000"></th>
+                <th id="zeroes100000"></th>
+                <th id="polynomial100000"></th>
             </tr>
         </table>
+        <br>
+        <p>DISCLAIMER: This is NOT an accurate representation of how "fast" or "good" your computer is.</p>
     </div>
 
     <!-- Footer -->
