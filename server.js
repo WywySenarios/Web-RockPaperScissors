@@ -16,10 +16,12 @@ function boot() {
   const express = require('express');
   const cors = require('cors');
   const multer = require('multer');
+  const bodyParser = require('body-parser');
   const port = 5322;
   const app = express();
 
   app.use(cors()); // allow input from ANY ip address
+  app.use(bodyParser.json()); // allow JSON input (related to the POST function)
 
   // const urlEncodedParams = express.urlencoded({
   //   extended : false, // use complex algorithm for large amounts of nested data?
