@@ -43,15 +43,14 @@ function boot() {
   //   res.sendFile("index.html", {root: __dirname});
   // });
 
-  // post commands
-
   app.post('/', (req, res) => {
     console.log("Empty Post");
   });
 
   app.post('/upload', (req, res) => {
     // handle upload
-    console.log("Receiving Data:")
+    console.log("Receiving Data:");
+    // console.log(req);
     console.log(req.body);
     // console.log(req.files);
     console.log("END: Receiving Data");
@@ -62,4 +61,4 @@ function boot() {
   });
 }
 
-bootQuestion();
+boot();

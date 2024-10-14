@@ -56,13 +56,19 @@ function run() {
 	// μ
 
 	// send results to server
-	const fd = new FormData();
-
-	fd.append("standard", results[0]);
+	const data = {
+		standardDEBUG: "standard",
+		optimizedDEBUG: "optimized",
+		zeroesDEBUG: "zeroes",
+		polynomialDEBUG: "polynomial"
+	}
 
 	fetch("/upload", {
 		method: "POST",
-		body: "bro stop trying so hard",
+		body: JSON.stringify(data),
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		}
 	});
 
 	// note that this function is complete.
