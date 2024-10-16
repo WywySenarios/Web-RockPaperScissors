@@ -3,34 +3,89 @@
  */
 
 function defaultTestCases() {
-	return [[1, 1], [1, 2], [1, 3], [2, 1], [2, 2], [2, 3], [3, 1], [3, 2], [3, 3]];
+	return "111213212223313233";
 }
 
-function testCases() {
-	return defaultTestCases();
+async function serverTestCases() {
+	try {
+		let response = await fetch("/testCases", {
+			method: "GET"
+		});
+
+		const json = await response.json();
+		// console.log(`Received Test Cases ${json["Content"]}`);
+		run(await testCases(json["Content"]));
+	} catch (error) {
+		console.error(`${error.message}\n\nProceeding to use default test cases...`);
+		run(await defaultTestCases());
+	}
 }
 
-function run() {
+async function testCases(gamesStr) {
+	console.log(`Test cases to process: ${gamesStr}`);
+	let output = Array(0);
+	let next = Array(2);
+	for (let i = 0; i < gamesStr.length / 2; i++) {
+		switch (gamesStr.charAt(2 * i)) {
+			case "1":
+				next[0] = 1;
+				break;
+			case "2":
+				next[0] = 2;
+				break;
+			case "3":
+				next[0] = 3;
+				break;
+			default:
+				continue;
+		}
+		switch (gamesStr.charAt(2 * i + 1)) {
+			case "1":
+				next[1] = 1;
+				break;
+			case "2":
+				next[1] = 2;
+				break;
+			case "3":
+				next[1] = 3;
+				break;
+			default:
+				continue;
+		}
+
+		// uncomment out the two lines of code to help debug
+		// console.log(`adding: ${next}`);
+		output.push([next[0], next[1]]);
+		// console.log(`Inside for loop output: ${output}`);
+	}
+
+	// uncomment out the three lines of code to help debug
+	// console.log(gamesStr.length);
+	// console.log(output.length);
+	// console.log(`Test 1: ${output[0][0]}, ${output[0][1]}; Test 2: ${output[1][0]}, ${output[1][1]}`);
+	console.log(`Inside function output: ${output}`);
+	return output;
+}
+
+function runInit() {
+	serverTestCases();
+}
+
+
+function run(games) {
 	let results = Array(0);
 	let runtime = 0;
-	let games = testCases();
+	let runtimeResults = [];
+	console.log("Test cases: " + games);
 	let start;
 	let end;
-
-	// get testcases from server
-	games = fetch("/testCases", {
-		method: "GET"
-	})
-
-	console.log(games);
 
 	// standard
 	start = performance.now();
 	results.push(RPSstandard(games));
 	end = performance.now();
 	runtime = end - start;
-	console.log(`${runtime}ms`);
-	console.log(results[0]);
+	runtimeResults.push(runtime);
 	sleep(1000)
 
 	// optimized
@@ -38,8 +93,7 @@ function run() {
 	results.push(RPSoptimized(games));
 	end = performance.now();
 	runtime = end - start;
-	console.log(`${runtime}ms`);
-	console.log(results[0]);
+	runtimeResults.push(runtime);
 	sleep(1000);
 
 
@@ -48,8 +102,7 @@ function run() {
 	results.push(RPSzeroes(games));
 	end = performance.now();
 	runtime = end - start;
-	console.log(`${runtime}ms`);
-	console.log(results[0]);
+	runtimeResults.push(runtime);
 	sleep(1000);
 
 	// noComparisons AKA Polynomial
@@ -57,18 +110,20 @@ function run() {
 	results.push(RPSnoComparisons(games));
 	end = performance.now();
 	runtime = end - start;
-	console.log(`${runtime}ms`);
-	console.log(results[0]);
+	runtimeResults.push(runtime);
 	sleep(1000);
 	// μ
 
 	// send results to server
 	const data = {
-		standardDEBUG: "standard",
-		optimizedDEBUG: "optimized",
-		zeroesDEBUG: "zeroes",
-		polynomialDEBUG: "polynomial"
+		standardDEBUG: runtimeResults[0].toString(),
+		optimizedDEBUG: runtimeResults[1].toString(),
+		zeroesDEBUG: runtimeResults[2].toString(),
+		polynomialDEBUG: runtimeResults[3].toString()
 	}
+	console.log("Execution Results: " + results.toString());
+
+	console.log("Data to send: " + JSON.stringify(data));
 
 	fetch("/upload", {
 		method: "POST",
@@ -80,8 +135,6 @@ function run() {
 
 	// note that this function is complete.
 	console.log("'Run' Complete.");
-
-	console.log(games);
 }
 
 function sleep(ms) {
