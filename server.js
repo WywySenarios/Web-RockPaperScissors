@@ -50,8 +50,28 @@ app.use(express.urlencoded({
 
 const upload = multer({ dest: 'files/' });
 
-app.get('/testCases', (req, res) => {
-  var data = {"Content": randomizeTestCases(5) };
+
+// GET requests for test cases
+app.get('/testCases/10000', (req, res) => {
+  var data = {"Content": randomizeTestCases(10000) };
+
+  console.log("Sending test cases...");
+
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.write(JSON.stringify(data));
+  res.end();
+});
+app.get('/testCases/1000', (req, res) => {
+  var data = {"Content": randomizeTestCases(1000) };
+
+  console.log("Sending test cases...");
+
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.write(JSON.stringify(data));
+  res.end();
+});
+app.get('/testCases/100', (req, res) => {
+  var data = {"Content": randomizeTestCases(100) };
 
   console.log("Sending test cases...");
 
@@ -60,6 +80,9 @@ app.get('/testCases', (req, res) => {
   res.end();
 });
 
+
+
+// POST request for the user to upload RPS runtime results
 app.post('/upload', (req, res) => {
   console.log(`Receiving Data:${JSON.stringify(req.body)}:END-Receiving Data`); // note what input has been given in logs
 

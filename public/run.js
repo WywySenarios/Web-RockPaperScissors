@@ -6,18 +6,19 @@ function defaultTestCases() {
 	return "111213212223313233";
 }
 
-async function serverTestCases() {
+// length should be a STRING
+async function serverTestCases(length) {
 	try {
-		let response = await fetch("/testCases", {
+		let response = await fetch("/testCases/" + length, {
 			method: "GET"
 		});
 
 		const json = await response.json();
 		// console.log(`Received Test Cases ${json["Content"]}`);
-		run(await testCases(json["Content"]));
+		return await testCases(json["Content"]);
 	} catch (error) {
 		console.error(`${error.message}\n\nProceeding to use default test cases...`);
-		run(await defaultTestCases());
+		return await defaultTestCases();
 	}
 }
 
@@ -67,61 +68,62 @@ async function testCases(gamesStr) {
 	return output;
 }
 
-function runInit() {
-	serverTestCases();
+async function runInit() {
+	run(await serverTestCases("100"));
+	run(await serverTestCases("1000"));
+	run(await serverTestCases("10000"));
 }
 
-
-function run(games) {
-	let results = Array(0);
-	let runtime = 0;
-	let runtimeResults = [];
+// run all algorithms in a random order with "games" as the test cases
+async function run(games) {
 	console.log("Test cases: " + games);
+	let runtime = NaN;
 	let start;
 	let end;
 
-	// standard
-	start = performance.now();
-	results.push(RPSstandard(games));
-	end = performance.now();
-	runtime = end - start;
-	runtimeResults.push(runtime);
-	sleep(1000)
+	let algorithms = [["standard", RPSstandard], ["optimized", RPSoptimized], ["zeroes", RPSzeroes], ["polynomial", RPSnoComparisons]];
+	let results = {
+		"runtime": {
+			"standard": NaN,
+			"optimized": NaN,
+			"zeroes": NaN,
+			"polynomial": NaN
+		},
+		"executionResults": {
+			"standard": null,
+			"optimized": null,
+			"zeroes": null,
+			"polynomial": null
+		}
+	};
 
-	// optimized
-	start = performance.now();
-	results.push(RPSoptimized(games));
-	end = performance.now();
-	runtime = end - start;
-	runtimeResults.push(runtime);
-	sleep(1000);
+	// run all algorithms in a random order while keeping track of runtime
+	let index = 0;
+	let output = null;
+	while (algorithms.length > 0) {
+		index = Math.round(Math.random() * algorithms.length); // pick a random algorithm to run
 
+		sleep(1000); // sleep to ensure that CPU usage is spread out and does not severely impact runtime
+		start = performance.now();
+		output = await algorithms[index][1](games);
 
-	// zeroes
-	start = performance.now();
-	results.push(RPSzeroes(games));
-	end = performance.now();
-	runtime = end - start;
-	runtimeResults.push(runtime);
-	sleep(1000);
+		// results["executionResult"][algorithms[index][0]] = algorithms[index][1](games);
+		end = performance.now();
+		runtime = end - start;
 
-	// noComparisons AKA Polynomial
-	start = performance.now();
-	results.push(RPSnoComparisons(games));
-	end = performance.now();
-	runtime = end - start;
-	runtimeResults.push(runtime);
-	sleep(1000);
+		console.log(`Output: ${output}`);
+		results["executionResult"][algorithms[index][0]] = output;
+		results["runtime"][algorithms[index][0]] = runtime;
+		if (! delete algorithms[index]) {
+			console.log("Failed to delete array element. \"run()\" function failed. Aborting...");
+			return;
+		}
+	}
 	// μ
 
 	// send results to server
-	const data = {
-		standardDEBUG: runtimeResults[0].toString(),
-		optimizedDEBUG: runtimeResults[1].toString(),
-		zeroesDEBUG: runtimeResults[2].toString(),
-		polynomialDEBUG: runtimeResults[3].toString()
-	}
-	console.log("Execution Results: " + results.toString());
+	console.log("Execution Results: " + results["executionResult"].toString());
+	console.log("Runtime: " + results["runtime"].toString());
 
 	console.log("Data to send: " + JSON.stringify(data));
 
