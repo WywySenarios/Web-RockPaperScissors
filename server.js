@@ -52,6 +52,33 @@ const upload = multer({ dest: 'files/' });
 
 
 // GET requests for test cases
+app.get('/testCases/10000000', (req, res) => {
+  var data = {"Content": randomizeTestCases(10000000) };
+
+  console.log("Sending test cases...");
+
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.write(JSON.stringify(data));
+  res.end();
+});
+app.get('/testCases/1000000', (req, res) => {
+  var data = {"Content": randomizeTestCases(1000000) };
+
+  console.log("Sending test cases...");
+
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.write(JSON.stringify(data));
+  res.end();
+});
+app.get('/testCases/100000', (req, res) => {
+  var data = {"Content": randomizeTestCases(100000) };
+
+  console.log("Sending test cases...");
+
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.write(JSON.stringify(data));
+  res.end();
+});
 app.get('/testCases/10000', (req, res) => {
   var data = {"Content": randomizeTestCases(10000) };
 

@@ -58,3 +58,9 @@ footer {
 }
 
 /* Animations END */
+
+/* Fix the frustrating misalignment of the bullet points ;) */
+
+.mainContent ul {
+    margin-left: 20px;
+}

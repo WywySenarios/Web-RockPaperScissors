@@ -16,7 +16,7 @@
 
         <!-- Buttons -->
         <!-- Made thanks to : https://stackoverflow.com/questions/2906582/how-do-i-create-an-html-button-that-acts-like-a-link -->
-        <input type="button" onclick="location.href='index.html';"value="Home"></input>
+        <input type="button" onclick="location.href='index.html';" value="Home"></input>
         <input type="button" onclick="location.href='visualization.html';" value="Results"></input>
         <input type="button"  value="Play"></input>
 
@@ -65,6 +65,20 @@
                 <th id="zeroes100000"></th>
                 <th id="polynomial100000"></th>
             </tr>
+            <tr>
+                <th>Runtime (ms/1000000 cases)</th>
+                <th id="standard1000000"></th>
+                <th id="optimized1000000"></th>
+                <th id="zeroes1000000"></th>
+                <th id="polynomial1000000"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/10000000 cases)</th>
+                <th id="standard10000000"></th>
+                <th id="optimized10000000"></th>
+                <th id="zeroes10000000"></th>
+                <th id="polynomial10000000"></th>
+            </tr>
         </table>
         <br>
         <p>DISCLAIMER: This is NOT an accurate representation of how "fast" or "good" your computer is.</p>
@@ -77,11 +91,20 @@
             Website created by: <a href="mailto:wywyericzhu@gmail.com">Eric Zhu & Wywy</a>
         </address>
 
+        <!-- Privacy Policy -->
+        <div class="footerColumn">
+            <a href="privacyPolicy.html">Privacy Policy</a>
+        </div>
+
         <!-- Attributions -->
-        <a href="https://www.flaticon.com/free-icons/rock-paper-scissors" title="rock paper scissors icons">Rock
-            paper scissors icons created by Freepik - Flaticon</a>
-        <a href="https://commons.wikimedia.org/wiki/File:Rock-paper-scissors.svg" title="rock paper scissors icons">Rock
-            paper scissors diagram created by Enzoklop</a>
+        <div class="footerColumn">
+            Attributions:
+            <a href="https://www.flaticon.com/free-icons/rock-paper-scissors" title="rock paper scissors icons">Rock
+                paper scissors icons created by Freepik - Flaticon</a>
+            <a href="https://commons.wikimedia.org/wiki/File:Rock-paper-scissors.svg"
+                title="rock paper scissors icons">Rock
+                paper scissors diagram created by Enzoklop</a>
+        </div>
 
         <script src="run.js"></script>
         <noscript>Your browser does not support JavaScript! Unfortunately, that means that you can't test my cool RPS algorithms on your computer. Very sad :c</noscript>

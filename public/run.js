@@ -23,7 +23,7 @@ async function serverTestCases(length) {
 }
 
 async function testCases(gamesStr) {
-	console.log(`Test cases to process: ${gamesStr}`);
+	// console.log(`Test cases to process: ${gamesStr}`);
 	let output = Array(0);
 	let next = Array(2);
 	for (let i = 0; i < gamesStr.length / 2; i++) {
@@ -56,27 +56,31 @@ async function testCases(gamesStr) {
 
 		// uncomment out the two lines of code to help debug
 		// console.log(`adding: ${next}`);
-		output.push([next[0], next[1]]);
+		await output.push([next[0], next[1]]);
 		// console.log(`Inside for loop output: ${output}`);
 	}
 
-	// uncomment out the three lines of code to help debug
+	// uncomment out the four lines of code to help debug
 	// console.log(gamesStr.length);
 	// console.log(output.length);
 	// console.log(`Test 1: ${output[0][0]}, ${output[0][1]}; Test 2: ${output[1][0]}, ${output[1][1]}`);
-	console.log(`Inside function output: ${output}`);
+	//console.log(`Inside function output: ${output}`);
 	return output;
 }
 
 async function runInit() {
-	run(await serverTestCases("100"));
-	run(await serverTestCases("1000"));
-	run(await serverTestCases("10000"));
+	await run("100");
+	await run("1000");
+	await run("10000");
+	await run("100000");
+	await run("1000000");
+	// run("10000000");
 }
 
 // run all algorithms in a random order with "games" as the test cases
-async function run(games) {
-	console.log("Test cases: " + games);
+async function run(numTestCases) {
+	games = await serverTestCases(numTestCases);
+	// console.log("Test cases: " + games);
 	let runtime = NaN;
 	let start;
 	let end;
@@ -100,21 +104,29 @@ async function run(games) {
 	// run all algorithms in a random order while keeping track of runtime
 	let index = 0;
 	let output = null;
-	while (algorithms.length > 0) {
+	let userOutput = null;
+	let currentLength = algorithms.length;
+	while (currentLength > 0) {
 		index = Math.round(Math.random() * algorithms.length); // pick a random algorithm to run
+		if (algorithms[index] == null) {
+			continue;
+		} else {
+			console.log(`Testing algorithm: ${algorithms[index][0]}`);
+			currentLength--;
+		}
+		// console.log(`Index: ${index}, length: ${algorithms.length}`);
+		// console.log(algorithms[index]);
 
-		sleep(1000); // sleep to ensure that CPU usage is spread out and does not severely impact runtime
-		start = performance.now();
+		await sleep(3000); // sleep to ensure that CPU usage is spread out and does not severely impact runtime
 		output = await algorithms[index][1](games);
+		output[0] = Math.round(output[0] * 1000) / 1000 // round to 1 decimal place??
 
-		// results["executionResult"][algorithms[index][0]] = algorithms[index][1](games);
-		end = performance.now();
-		runtime = end - start;
-
-		console.log(`Output: ${output}`);
-		results["executionResult"][algorithms[index][0]] = output;
-		results["runtime"][algorithms[index][0]] = runtime;
-		if (! delete algorithms[index]) {
+		// console.log(`Output: ${output}`);
+		userOutput = document.getElementById(algorithms[index][0] + numTestCases);
+		userOutput.innerHTML = output[0];
+		results["runtime"][algorithms[index][0]] = output[0];
+		results["executionResults"][algorithms[index][0]] = output[1];
+		if (await ! await delete algorithms[index]) {
 			console.log("Failed to delete array element. \"run()\" function failed. Aborting...");
 			return;
 		}
@@ -122,14 +134,11 @@ async function run(games) {
 	// μ
 
 	// send results to server
-	console.log("Execution Results: " + results["executionResult"].toString());
-	console.log("Runtime: " + results["runtime"].toString());
+	console.log("Data to send: " + JSON.stringify(results["runtime"]));
 
-	console.log("Data to send: " + JSON.stringify(data));
-
-	fetch("/upload", {
+	fetch("/upload#lolers", {
 		method: "POST",
-		body: JSON.stringify(data),
+		body: JSON.stringify(results["runtime"]),
 		headers: {
 			"Content-type": "application/json; charset=UTF-8"
 		}
@@ -139,15 +148,18 @@ async function run(games) {
 	console.log("'Run' Complete.");
 }
 
-function sleep(ms) {
-	let a = new Promise(resolve => setTimeout(resolve, ms));
-	a.then(() => { return; });
+async function sleep(ms) {
+	await new Promise(r => setTimeout(r, ms));
 }
 
-// Returns an array with the execution results
-function RPSstandard(games) {
+
+
+// Below are RPS functions. They return an array with [runtime, execution results].
+
+async function RPSstandard(games) {
 	let results = Array(0);
 
+	runtime = await performance.now();
 	for (let i = 0; i < games.length; i++) {
 		if (games[i][0] == games[i][1]) { // tie
 			results.push(0);
@@ -172,13 +184,15 @@ function RPSstandard(games) {
 		}
 	}
 
-	return results;
+	runtime = await performance.now() - runtime;
+	return [runtime, results];
 }
 
 // Returns an array with the execution results
-function RPSoptimized(games) {
+async function RPSoptimized(games) {
 	let results = Array(0);
 
+	runtime = await performance.now();
 	for (let i = 0; i < games.length; i++) {
 		if (games[i][0] == games[i][1]) { // tie
 			results.push(0);
@@ -191,13 +205,15 @@ function RPSoptimized(games) {
 		}
 	}
 
-	return results;
+	runtime = await performance.now() - runtime;
+	return [runtime, results];
 }
 
 // Returns an array with the execution results
-function RPSzeroes(games) {
+async function RPSzeroes(games) {
 	let results = Array(0);
 
+	runtime = await performance.now();
 	for (let i = 0; i < games.length; i++) {
 		let game = games[i][0] * 10 + games[i][1]; // [p1][p2]
 
@@ -210,13 +226,15 @@ function RPSzeroes(games) {
 		}
 	}
 
-	return results;
+	runtime = await performance.now() - runtime;
+	return [runtime, results];
 }
 
 // Returns an array with the execution results
-function RPSnoComparisons(games) {
+async function RPSnoComparisons(games) {
 	let results = Array(0);
 
+	runtime = await performance.now();
 	for (let i = 0; i < games.length; i++) {
 		/*
 		 * Polynomial equation that satisfies the following points:
@@ -230,5 +248,6 @@ function RPSnoComparisons(games) {
 		results.push(Math.round((x - z) * (x + -2.66069 * z) * (x + -0.753293 * z) * (x + -2.96691 * z) * (x + -0.751818 * z) * (x + -1.48948 * z) * (x + -0.33313 * z) * (x + -0.751626 * z) * (x + -1.05309 * z)));
 	}
 
-	return results;
+	runtime = await performance.now() - runtime;
+	return [runtime, results];
 }
