@@ -29,7 +29,7 @@
         <input type="text" id="name">
         <input type="button" id="run" onclick="runInit()" value="Run">
 
-        <table>
+        <table id="runtimeTable">
             <tr>
                 <th></th>
                 <th>Standard Algorithm</th>
@@ -61,24 +61,143 @@
             </tr>
             <tr>
                 <th>Runtime (ms/100000 cases)</th>
-                <th id="standard100000"></th>
-                <th id="optimized100000"></th>
-                <th id="zeroes100000"></th>
-                <th id="polynomial100000"></th>
+                <th id="standard100000.1"></th>
+                <th id="optimized100000.1"></th>
+                <th id="zeroes100000.1"></th>
+                <th id="polynomial100000.1"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/100000 cases)</th>
+                <th id="standard100000.2"></th>
+                <th id="optimized100000.2"></th>
+                <th id="zeroes100000.2"></th>
+                <th id="polynomial100000.2"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/100000 cases)</th>
+                <th id="standard100000.3"></th>
+                <th id="optimized100000.3"></th>
+                <th id="zeroes100000.3"></th>
+                <th id="polynomial100000.3"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/100000 cases)</th>
+                <th id="standard100000.4"></th>
+                <th id="optimized100000.4"></th>
+                <th id="zeroes100000.4"></th>
+                <th id="polynomial100000.4"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/100000 cases)</th>
+                <th id="standard100000.5"></th>
+                <th id="optimized100000.5"></th>
+                <th id="zeroes100000.5"></th>
+                <th id="polynomial100000.5"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/100000 cases)</th>
+                <th id="standard100000.6"></th>
+                <th id="optimized100000.6"></th>
+                <th id="zeroes100000.6"></th>
+                <th id="polynomial100000.6"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/100000 cases)</th>
+                <th id="standard100000.7"></th>
+                <th id="optimized100000.7"></th>
+                <th id="zeroes100000.7"></th>
+                <th id="polynomial100000.7"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/100000 cases)</th>
+                <th id="standard100000.8"></th>
+                <th id="optimized100000.8"></th>
+                <th id="zeroes100000.8"></th>
+                <th id="polynomial100000.8"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/100000 cases)</th>
+                <th id="standard100000.9"></th>
+                <th id="optimized100000.9"></th>
+                <th id="zeroes100000.9"></th>
+                <th id="polynomial100000.9"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/100000 cases)</th>
+                <th id="standard100000.10"></th>
+                <th id="optimized100000.10"></th>
+                <th id="zeroes100000.10"></th>
+                <th id="polynomial100000.10"></th>
             </tr>
             <tr>
                 <th>Runtime (ms/1000000 cases)</th>
-                <th id="standard1000000"></th>
-                <th id="optimized1000000"></th>
-                <th id="zeroes1000000"></th>
-                <th id="polynomial1000000"></th>
+                <th id="standard1000000.1"></th>
+                <th id="optimized1000000.1"></th>
+                <th id="zeroes1000000.1"></th>
+                <th id="polynomial1000000.1"></th>
             </tr>
             <tr>
-                <th>Runtime (ms/10000000 cases)</th>
-                <th id="standard10000000"></th>
-                <th id="optimized10000000"></th>
-                <th id="zeroes10000000"></th>
-                <th id="polynomial10000000"></th>
+                <th>Runtime (ms/1000000 cases)</th>
+                <th id="standard1000000.2"></th>
+                <th id="optimized1000000.2"></th>
+                <th id="zeroes1000000.2"></th>
+                <th id="polynomial1000000.2"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/1000000 cases)</th>
+                <th id="standard1000000.3"></th>
+                <th id="optimized1000000.3"></th>
+                <th id="zeroes1000000.3"></th>
+                <th id="polynomial1000000.3"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/1000000 cases)</th>
+                <th id="standard1000000.4"></th>
+                <th id="optimized1000000.4"></th>
+                <th id="zeroes1000000.4"></th>
+                <th id="polynomial1000000.4"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/1000000 cases)</th>
+                <th id="standard1000000.5"></th>
+                <th id="optimized1000000.5"></th>
+                <th id="zeroes1000000.5"></th>
+                <th id="polynomial1000000.5"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/1000000 cases)</th>
+                <th id="standard1000000.6"></th>
+                <th id="optimized1000000.6"></th>
+                <th id="zeroes1000000.6"></th>
+                <th id="polynomial1000000.6"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/1000000 cases)</th>
+                <th id="standard1000000.7"></th>
+                <th id="optimized1000000.7"></th>
+                <th id="zeroes1000000.7"></th>
+                <th id="polynomial1000000.7"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/1000000 cases)</th>
+                <th id="standard1000000.8"></th>
+                <th id="optimized1000000.8"></th>
+                <th id="zeroes1000000.8"></th>
+                <th id="polynomial1000000.8"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/1000000 cases)</th>
+                <th id="standard1000000.9"></th>
+                <th id="optimized1000000.9"></th>
+                <th id="zeroes1000000.9"></th>
+                <th id="polynomial1000000.9"></th>
+            </tr>
+            <tr>
+                <th>Runtime (ms/1000000 cases)</th>
+                <th id="standard1000000.10"></th>
+                <th id="optimized1000000.10"></th>
+                <th id="zeroes1000000.10"></th>
+                <th id="polynomial1000000.10"></th>
             </tr>
         </table>
         <br>

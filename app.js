@@ -19,6 +19,7 @@ function randomizeTestCases(numGames) {
 
 // imports
 const express = require('express');
+const urlLibrary = require('url');
 const cors = require('cors');
 const multer = require('multer');
 const bodyParser = require('body-parser');
@@ -31,17 +32,6 @@ const childProcess = require("child_process");
 // constants
 const port = 5322;
 const app = express();
-
-// setup & run bash file
-// const bash_run = childProcess.spawn(
-//   'cmd.exe', ['/c', "graphs.bat"], { env: process.env });
-// bash_run.stdout.on('data', function (data) {
-//   console.log('graphs.bat: ' + data);
-// });
-// bash_run.stderr.on('data', function (data) {
-//   console.log('graphs.bat ERROR: ' + data);
-// });
-// END setup & run bash file
 
 app.use(cors()); // allow input from ANY ip address
 app.use(bodyParser.json()); // allow JSON input (related to the POST function)
@@ -64,6 +54,26 @@ const upload = multer({ dest: 'files/' });
 
 
 // GET requests for test cases
+// app.get('/testCases', (req, res) => {
+//   let url = urlLibrary.parse(req.url, true);
+//   let numTestCases = parseInt(url.numTestCases);
+//   console.log(`The user is requesting ${url.numTestCases} test cases...`);
+
+//   if (numTestCases > 100001) {
+//     let data = { "Content": randomizeTestCases(parseInt(url.numTestCases)) };
+//     console.log("Sending test cases...");
+//     console.log(`Data: ${data}`);
+
+//     res.writeHead(200, { "Content-Type": "application/json" });
+//     res.write(JSON.stringify(data));
+//     res.end();
+//     console.log("Test cases have been successfully sent.");
+//   } else {
+//     console.log(`The user has requested a number of test cases (${url.numTestCases}) that is too large to reasonably process.`);
+//     res.writeHead(413);
+//     res.end();
+//   }
+// });
 app.get('/testCases/10000000', (req, res) => {
   var data = { "Content": randomizeTestCases(10000000) };
 
@@ -126,14 +136,25 @@ app.post('/upload', (req, res) => {
   data = JSON.stringify(req.body)
   console.log(`Receiving Data:${data}:END-Receiving Data`); // note what input has been given in logs
 
-  // handle upload
-  res.status(204);
-  res.end();
 
-
-  const output = fs.createWriteStream("files\\output.json");
+  const output = fs.createWriteStream("files\\" + data["name"] + ".json");
   output.write(data);
   output.close();
+
+  // setup & run bash file
+  // const bash_run = childProcess.spawn(
+  //   'cmd.exe', ['/c', "graphs.bat"], { env: process.env });
+  // bash_run.stdout.on('data', function (data) {
+  //   console.log('graphs.bat: ' + data);
+  // });
+  // bash_run.stderr.on('data', function (data) {
+  //   console.log('graphs.bat ERROR: ' + data);
+  // });
+  // END setup & run bash file
+
+  // Tell client that their data has been successfully sent & stored
+  res.status(204);
+  res.end();
 });
 
 app.listen(port, () => {

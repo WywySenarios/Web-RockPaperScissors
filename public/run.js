@@ -1,7 +1,15 @@
 /*
  * games: [[p1, p2], etc.]
  */
+const sleepLength = 1 // sleep length in ms
 const nameTextField = document.getElementById("name");
+let testCases = {
+	"100": null,
+	"1000": null,
+	"10000": null,
+	"100000": null,
+	"1000000": null
+}
 
 function defaultTestCases() {
 	return "111213212223313233";
@@ -16,14 +24,14 @@ async function serverTestCases(length) {
 
 		const json = await response.json();
 		// console.log(`Received Test Cases ${json["Content"]}`);
-		return await testCases(json["Content"]);
+		return await processTestCases(json["Content"]);
 	} catch (error) {
 		console.error(`${error.message}\n\nProceeding to use default test cases...`);
 		return await defaultTestCases();
 	}
 }
 
-async function testCases(gamesStr) {
+async function processTestCases(gamesStr) {
 	// console.log(`Test cases to process: ${gamesStr}`);
 	let output = Array(0);
 	let next = Array(2);
@@ -70,27 +78,59 @@ async function testCases(gamesStr) {
 }
 
 async function runInit() {
-	let output = {
+	testCases["100"] = await serverTestCases("100");
+	testCases["1000"] = await serverTestCases("1000");
+	testCases["10000"] = await serverTestCases("10000");
+	testCases["100000"] = await serverTestCases("100000");
+	testCases["1000000"] = await serverTestCases("1000000");
+
+	let results = await {
 		"name": nameTextField.value,
-		"100": await run("100"),
-		"1000": await run("1000"),
-		"10000": await run("10000"),
-		"100000": await run("100000"),
-		"1000000": await run("1000000")
+		"100": await run("100", ""),
+		"1000": await run("1000", ""),
+		"10000": await run("10000", ""),
+		// "100000": await run("100000", ""),
+		"100000.1": await run("100000", ".1"),
+		"100000.2": await run("100000", ".2"),
+		"100000.3": await run("100000", ".3"),
+		"100000.4": await run("100000", ".4"),
+		"100000.5": await run("100000", ".5"),
+		"100000.6": await run("100000", ".6"),
+		"100000.7": await run("100000", ".7"),
+		"100000.8": await run("100000", ".8"),
+		"100000.9": await run("100000", ".9"),
+		"100000.10": await run("100000", ".10"),
+		"1000000.1": await run("1000000", ".1"),
+		"1000000.2": await run("1000000", ".2"),
+		"1000000.3": await run("1000000", ".3"),
+		"1000000.4": await run("1000000", ".4"),
+		"1000000.5": await run("1000000", ".5"),
+		"1000000.6": await run("1000000", ".6"),
+		"1000000.7": await run("1000000", ".7"),
+		"1000000.8": await run("1000000", ".8"),
+		"1000000.9": await run("1000000", ".9"),
+		"1000000.10": await run("1000000", ".10")
 	}
+
+	// send results to server
+	console.log("Data to send: " + JSON.stringify(results));
+
+	fetch("/upload", {
+		method: "POST",
+		body: await JSON.stringify(results),
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		}
+	});
 }
 
 // run all algorithms in a random order with "games" as the test cases
-async function run(numTestCases) {
-	games = await serverTestCases(numTestCases);
+async function run(numTestCases, elementName) {
+	let games = testCases[numTestCases];
 	// console.log("Test cases: " + games);
-	let runtime = NaN;
-	let start;
-	let end;
 
 	let algorithms = [["standard", RPSstandard], ["optimized", RPSoptimized], ["zeroes", RPSzeroes], ["polynomial", RPSnoComparisons]];
 	let results = {
-		"name": nameTextField.value,
 		"runtime": {
 			"standard": NaN,
 			"optimized": NaN,
@@ -104,6 +144,8 @@ async function run(numTestCases) {
 			"polynomial": null
 		}
 	};
+
+	await sleep(sleepLength); // sleep to ensure that CPU usage is spread out and does not severely impact runtime
 
 	// run all algorithms in a random order while keeping track of runtime
 	let index = 0;
@@ -121,12 +163,13 @@ async function run(numTestCases) {
 		// console.log(`Index: ${index}, length: ${algorithms.length}`);
 		// console.log(algorithms[index]);
 
-		await sleep(3000); // sleep to ensure that CPU usage is spread out and does not severely impact runtime
+		await sleep(sleepLength); // sleep to ensure that CPU usage is spread out and does not severely impact runtime
 		output = await algorithms[index][1](games);
 		output[0] = Math.round(output[0] * 1000) / 1000 // round to 1 decimal place??
 
 		// console.log(`Output: ${output}`);
-		userOutput = document.getElementById(algorithms[index][0] + numTestCases);
+		userOutput = document.getElementById(algorithms[index][0] + numTestCases + elementName);
+		console.log(algorithms[index][0] + numTestCases + elementName);
 		userOutput.innerHTML = output[0];
 		results["runtime"][algorithms[index][0]] = output[0];
 		results["executionResults"][algorithms[index][0]] = output[1];
@@ -137,21 +180,12 @@ async function run(numTestCases) {
 	}
 	// μ
 
-	// remove executions results to avoid hitting a packet limit
+	// console.log(`Execution results: ${results[executionResults]}`);
+	// prevent a packet that is too large to process:
 	results["executionResults"] = null;
-	// send results to server
-	console.log("Data to send: " + JSON.stringify(results));
 
-	fetch("/upload#lolers", {
-		method: "POST",
-		body: JSON.stringify(results),
-		headers: {
-			"Content-type": "application/json; charset=UTF-8"
-		}
-	});
 
-	// note that this function is complete.
-	console.log("'Run' Complete.");
+	return results["runtime"];
 }
 
 async function sleep(ms) {
