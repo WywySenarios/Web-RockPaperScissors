@@ -1,6 +1,7 @@
 /*
  * games: [[p1, p2], etc.]
  */
+const nameTextField = document.getElementById("name");
 
 function defaultTestCases() {
 	return "111213212223313233";
@@ -69,12 +70,14 @@ async function testCases(gamesStr) {
 }
 
 async function runInit() {
-	await run("100");
-	await run("1000");
-	await run("10000");
-	await run("100000");
-	await run("1000000");
-	// run("10000000");
+	let output = {
+		"name": nameTextField.value,
+		"100": await run("100"),
+		"1000": await run("1000"),
+		"10000": await run("10000"),
+		"100000": await run("100000"),
+		"1000000": await run("1000000")
+	}
 }
 
 // run all algorithms in a random order with "games" as the test cases
@@ -87,6 +90,7 @@ async function run(numTestCases) {
 
 	let algorithms = [["standard", RPSstandard], ["optimized", RPSoptimized], ["zeroes", RPSzeroes], ["polynomial", RPSnoComparisons]];
 	let results = {
+		"name": nameTextField.value,
 		"runtime": {
 			"standard": NaN,
 			"optimized": NaN,
@@ -133,12 +137,14 @@ async function run(numTestCases) {
 	}
 	// μ
 
+	// remove executions results to avoid hitting a packet limit
+	results["executionResults"] = null;
 	// send results to server
-	console.log("Data to send: " + JSON.stringify(results["runtime"]));
+	console.log("Data to send: " + JSON.stringify(results));
 
 	fetch("/upload#lolers", {
 		method: "POST",
-		body: JSON.stringify(results["runtime"]),
+		body: JSON.stringify(results),
 		headers: {
 			"Content-type": "application/json; charset=UTF-8"
 		}
