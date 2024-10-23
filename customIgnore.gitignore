@@ -1,2 +1,10 @@
 # ignore all files inside the "file" folder
 .files/*
+# we DO want master.json though
+!.files/master.json
+
+
+# ignore skeleton file thingies
+binding.gyp
+graphs.bat
+redrawGraphs.py

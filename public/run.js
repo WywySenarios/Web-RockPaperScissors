@@ -63,17 +63,9 @@ async function processTestCases(gamesStr) {
 				continue;
 		}
 
-		// uncomment out the two lines of code to help debug
-		// console.log(`adding: ${next}`);
 		await output.push([next[0], next[1]]);
-		// console.log(`Inside for loop output: ${output}`);
 	}
-
-	// uncomment out the four lines of code to help debug
-	// console.log(gamesStr.length);
-	// console.log(output.length);
-	// console.log(`Test 1: ${output[0][0]}, ${output[0][1]}; Test 2: ${output[1][0]}, ${output[1][1]}`);
-	//console.log(`Inside function output: ${output}`);
+	
 	return output;
 }
 
