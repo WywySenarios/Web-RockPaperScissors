@@ -18,7 +18,7 @@
         <!-- Made thanks to : https://stackoverflow.com/questions/2906582/how-do-i-create-an-html-button-that-acts-like-a-link -->
         <input type="button" onclick="location.href='index.html';" value="Home"></input>
         <input type="button" onclick="location.href='visualization.html';" value="Results"></input>
-        <input type="button"  value="Play"></input>
+        <input type="button" value="Play"></input>
 
         <!-- Search bar -->
         <input type="text" placeholder="Search">
@@ -26,8 +26,58 @@
 
     <!-- Main content -->
     <div class="mainContent">
-        <input type="text" id="name">
-        <input type="button" id="run" onclick="runInit()" value="Run">
+        <form>
+            <p>Device Model (e.g. iPhone 14)</p>
+            <input type="text" id="device model">
+            <p>Are you using Windows 11?</p>
+            <input type="checkbox" id="windows11">
+            <!-- <p>Operating System Type</p>
+            <select name="OS" id="OS">
+                <option value="Windows 11">Windows 11</option>
+                <option value="Windows 10">Windows 10</option>
+                <option value="Linux">Linux</option>
+                <option value="macOS">Mac OS</option>
+                Negligible difference between iPhone & iPad
+                <option value="iOS">Apple Phones & iPads (iOS or iPadOS)</option>
+                <option value="watchOS">Apple Watches (watchOS)</option>
+                <option value="Android">Android</option>
+                <option value="other">Other</option>
+            </select> -->
+            <p>System type</p>
+            <select name="system type" id="system type">
+                <option value="x32">x32</option>
+                <option value="x64">x64</option>
+                <option value="x86">x86</option>
+            </select>
+            <p>Processor Model (e.g. Intel(R) Core(TM) i7-8550U)</p>
+            <input type="text" id="processor">
+            <p>CPU clock speed (GHz)</p>
+            <input type="text" id="CPU clock speed">
+            <p>OS Version (leave blank if you don't know) (e.g. "22631.4317" for Windows 11 Home Build 22631.4317)</p>
+            <input type="text" id="OS version">
+            <p>Specify any special software modifications you have made to your computer:</p>
+            <input type="text" id="modifications">
+            <p>Website task priority (e.g. "High")</p>
+            <select name="website priority" id="website priority">
+                <option value="Efficiency Mode">Efficiency Mode</option>
+                <option value="Low">Low</option>
+                <option value="Below Normal">Below Normal</option>
+                <option value="Normal or Unset">Normal or Unset</option>
+                <option value="Above Normal">Above Normal</option>
+                <option value="High">High</option>
+                <option value="Realtime">Realtime</option>
+            </select>
+            <p>Device Age in Years</p>
+            <input type="range" id="device age" min="0" max="12" value="2" oninput="this.nextElementSibling.value = this.value">
+            <output>2</output>
+            <p>Device RAM in GB</p>
+            <input type="range" id="memory" min="2" max="32" value="8" oninput="this.nextElementSibling.value = this.value">
+            <output>8</output>
+            <p>Name (you can put a fake one if you'd like!)</p>
+            <input type="text" id="name" minlength="1" maxlength="">
+            <br>
+            <input type="button" id="run" onclick="runInit()" value="Run">
+        </form>
 
         <table id="runtimeTable">
             <tr>
@@ -227,7 +277,8 @@
         </div>
 
         <script src="run.js"></script>
-        <noscript>Your browser does not support JavaScript! Unfortunately, that means that you can't test my cool RPS algorithms on your computer. Very sad :c</noscript>
+        <noscript>Your browser does not support JavaScript! Unfortunately, that means that you can't test my cool RPS
+            algorithms on your computer. Very sad :c</noscript>
     </footer>
 </body>
 

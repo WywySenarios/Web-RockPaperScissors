@@ -23,6 +23,7 @@ const urlLibrary = require('url');
 const cors = require('cors');
 // const multer = require('multer');
 const bodyParser = require('body-parser');
+const UAParsing = require('ua-parser-js');
 const fs = require('fs');
 const childProcess = require("child_process");
 
@@ -97,19 +98,52 @@ function appendJSON(filePath, incomingIndex, infoToAdd) {
 
 // POST request for the user to upload RPS runtime results
 app.post('/upload', (req, res) => {
-  data = req.body
-  console.log(`Receiving Data:${JSON.stringify(data)}:END-Receiving Data`); // note what input has been given in logs
-  let username = data["name"];
-  let userID = username + "_" + Date.now().toString(); // ID is always unique even if the same person comes back to the program at a later date
-  delete data["name"];
+  // look for the user's info using user-agent s
+  let userInfo = (new UAParsing.UAParser(req.headers["user-agent"])).getResult();
+  console.log(userInfo);
+  let userID;
+
+  try {
+    data = req.body
+    console.log(`Receiving Data:${JSON.stringify(data)}:END-Receiving Data`); // note what input has been given in logs
+    // add user-agent related specs
+    data["specs"]["browser"] = userInfo["browser"];
+    data["specs"]["engine"] = userInfo["engine"]; // js engine
+    data["specs"]["os"]["name"] = userInfo["os"]["name"];
+    // some weird behaviour with Windows causes window 11 & 10 to be indifferentiable to the server
+    // Add server data ONLY IF client does not self-report
+    if (data["specs"]["os"]["version"] == "") {
+      data["specs"]["os"]["version"] = userInfo["version"];
+    }
+
+    // contextualize some data by adding units
+    data["specs"]["CPU clock speed"] += "GHz";
+    data["specs"]["memory"] += "GB";
+
+    // generate a UID for the user's input based on their username & the current time
+    let username = data["name"];
+    userID = username + "_" + Date.now().toString(); // ID is always unique even if the same person comes back to the program at a later date
+    delete data["name"];
+  } catch (error) { // erroneous user input
+    res.status(213);
+    res.end();
+    return;
+  }
   // add all data to master file
   appendJSON("files\\master.json", userID, data);
 
   // add data to individual trial files
+  let currentData;
   for (const key in data) {
+    if (key == "specs") {
+      continue;
+    }
+
     try {
-      appendJSON("files\\" + key + ".json", userID, data[key]);
-    } catch(error) {
+      currentData = data[key];
+      currentData["specs"] = data["specs"]; // add specs for extra context
+      appendJSON("files\\" + key + ".json", userID, currentData);
+    } catch (error) {
       console.log("User tried to run a test case that the server didn't recognize?");
     }
   }

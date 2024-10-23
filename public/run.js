@@ -2,7 +2,6 @@
  * games: [[p1, p2], etc.]
  */
 const sleepLength = 1 // sleep length in ms
-const nameTextField = document.getElementById("name");
 let testCases = {
 	"100": null,
 	"1000": null,
@@ -65,7 +64,7 @@ async function processTestCases(gamesStr) {
 
 		await output.push([next[0], next[1]]);
 	}
-	
+
 	return output;
 }
 
@@ -77,7 +76,18 @@ async function runInit() {
 	testCases["1000000"] = await serverTestCases("1000000");
 
 	let results = await {
-		"name": nameTextField.value,
+		"specs": {
+			"device model": document.getElementById("device model").value,
+			"system type": document.getElementById("system type").value,
+			"processor": document.getElementById("processor").value,
+			"CPU clock speed": document.getElementById("CPU clock speed").value,
+			"os": { "version": document.getElementById("OS version").value },
+			"modifications": document.getElementById("modifications").value,
+			"website priority": document.getElementById("website priority").value,
+			"device age": document.getElementById("device age").value,
+			"memory": document.getElementById("memory").value
+		},
+		"name": document.getElementById("name").value,
 		"100": await run("100", ""),
 		"1000": await run("1000", ""),
 		"10000": await run("10000", ""),
@@ -106,6 +116,15 @@ async function runInit() {
 
 	// send results to server
 	console.log("Data to send: " + JSON.stringify(results));
+
+	// user self-reports using Windows 11 instead of 10?
+	console.log(document.getElementById("windows11").value);
+	if (document.getElementById("windows11").value == true) {
+		results["os"] = {
+			"name": "Windows",
+			"version": "11"
+		};
+	}
 
 	fetch("/upload", {
 		method: "POST",
