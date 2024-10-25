@@ -1,8 +1,0 @@
-# ignore all files inside the "file" folder
-.files/*
-
-
-# ignore skeleton file thingies
-binding.gyp
-graphs.bat
-redrawGraphs.py

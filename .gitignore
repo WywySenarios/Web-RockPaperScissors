@@ -1,3 +1,12 @@
+# ignore all files inside the "file" folder
+/files/*.json
+
+
+# ignore skeleton file thingies
+binding.gyp
+graphs.bat
+redrawGraphs.py
+
 # copied from 'https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore":
 .vscode/*
 !.vscode/settings.json

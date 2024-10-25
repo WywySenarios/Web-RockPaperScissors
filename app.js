@@ -105,8 +105,10 @@ function appendJSON(filePath, incomingIndex, infoToAdd) {
     console.log(`Data (before): ${JSON.stringify(data)}`);
   } catch (error) {
     if (error.code === 'ENOENT') {
+      fs.writeFile(filePath, '{}', (error) => {});
       data = {};
     } else {
+      console.log("Oops! Couldn't read the file.");
       throw error;
     }
   }
@@ -125,7 +127,7 @@ function appendJSON(filePath, incomingIndex, infoToAdd) {
 app.post('/upload', (req, res) => {
   // look for the user's info using user-agent s
   let userInfo = (new UAParsing.UAParser(req.headers["user-agent"])).getResult();
-  console.log(userInfo);
+  console.log(`UA info: ${userInfo}`);
   let userID;
 
   try {

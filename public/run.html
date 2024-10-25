@@ -26,6 +26,8 @@
 
     <!-- Main content -->
     <div class="mainContent">
+        <p>To access information relevant to this form in a Windows computer, type "about" in the windows search bar & you should be taken to a settings page with all the necessary specs listed under "Device specifications" and "Windows specifications".</p>
+        <br>
         <form>
             <p>Device Model (e.g. iPhone 14)</p>
             <input type="text" id="device model">
@@ -53,7 +55,7 @@
             <input type="text" id="processor">
             <p>CPU clock speed (GHz)</p>
             <input type="text" id="CPU clock speed">
-            <p>OS Version (leave blank if you don't know) (e.g. "22631.4317" for Windows 11 Home Build 22631.4317)</p>
+            <p>OS Version (leave blank if you don't know) (e.g. "22631.4317")</p>
             <input type="text" id="OS version">
             <p>Specify any special software modifications you have made to your computer:</p>
             <input type="text" id="modifications">
@@ -73,7 +75,7 @@
             <p>Device RAM in GB</p>
             <input type="range" id="memory" min="2" max="32" value="8" oninput="this.nextElementSibling.value = this.value">
             <output>8</output>
-            <p>Name (you can put a fake one if you'd like!)</p>
+            <p>Name or Device Name (e.g. DESKTOP-4MC7FUG) (you can put a fake one if you'd like!)</p>
             <input type="text" id="name" minlength="1" maxlength="">
             <br>
             <input type="button" id="run" onclick="runInit()" value="Run">
