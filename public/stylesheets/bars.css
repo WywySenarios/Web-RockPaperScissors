@@ -1,6 +1,7 @@
 /* Universal */
 
 * {
+    --top-bar-height: 75px;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -25,7 +26,7 @@
 /* Main content */
 
 .mainContent {
-    margin-top: 75px;
+    margin-top: var(--top-bar-height);
     padding: 10px;
     min-height: calc(100vh - 75px - 75px);
     /* screen height - top bar - footer*/
@@ -55,7 +56,7 @@
     top: 0;
     left: 0;
     padding: 20px;
-    height: 75px;
+    height: var(--top-bar-height);
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -65,17 +66,18 @@
 }
 
 .top-bar img {
-    height: calc(75px - 20px - 20px);
+    height: calc(var(--top-bar-height) - 20px - 20px);
     /* height - padding*/
     aspect-ratio: 1;
 }
 
 .top-bar input[type="button"] {
-    height: 75px;
+    height: var(--top-bar-height);
     width: 100px;
     padding: 0px;
     border: none;
     cursor: pointer;
+    visibility: visible;
 }
 
 .top-bar input[type="text"] {
@@ -87,6 +89,7 @@
     border: none;
     color: #000;
     border-radius: 5px;
+    visibility: visible;
 }
 
 /* Footer */
@@ -107,4 +110,26 @@ address, .footerColumn {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+}
+
+/* mobile support */
+
+@media (orientation: portrait) {
+    * {
+        --top-bar-height: 10vh;
+    }
+
+    .top-bar img {
+        width:20vw;
+    }
+    .top-bar input[type="button"] {
+        width:30vw;
+        font-size: xx-large;
+    }
+
+    .top-bar input[type="text"] {
+        width:100%;
+        height:60%;
+        font-size: xx-large;
+    }
 }

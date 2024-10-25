@@ -18,6 +18,7 @@ body {
 }
 
 .top-bar input[type="button"] {
+    color: black;
     background-color: unset;
 }
 

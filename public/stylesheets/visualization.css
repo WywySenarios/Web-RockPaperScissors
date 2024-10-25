@@ -1,0 +1,12 @@
+/* mobile support */
+
+@media (orientation: portrait) {
+    .mainContent select {
+        height: 100px;
+        font-size: large;
+    }
+    .mainContent button {
+        height: 100px;
+        font-size: large;
+    }
+}
