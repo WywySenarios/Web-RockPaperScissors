@@ -6,6 +6,9 @@
     <link rel="icon" href="assets/rock-paper-scissors.png">
     <link rel="stylesheet" href="stylesheets\main_sunset.css">
     <link rel="stylesheet" href="stylesheets\bars.css">
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -26,13 +29,28 @@
 
     <!-- Main content -->
     <div class="mainContent">
-        <p>To access information relevant to this form in a Windows computer, type "about" in the windows search bar & you should be taken to a settings page with all the necessary specs listed under the device name, "Device specifications", and "Windows specifications".</p>
+        <p>Don't worry about filling in all the form---fill in all you know and leave anything that you don't know blank.</p>
         <br>
+        <h1>How to get PC information</h1>
+        <p>Windows PC: type "about" in the windows search bar & you should be taken to a settings page with all the necessary specs listed under the device name, "Device specifications", and "Windows specifications".</p>
+        <br>
+        <p>Mac: type "About this Mac" or "About" in the Mac search bar. All the necessary information should be provided.</p>
+        <br>
+        <p>ChromeBook: To find the hardware specs of a chromebook, type "about" in the ChromeOS search bar (NOT CHROME).</p>
+        <p>To find the OS version of a chromebook, type "about ChromeOS" in the ChromeOS search bar (NOT CHROME); and then click on "additional details", and then click on "build details". The OS version should be the first line of relevant information.</p>
+        <br>
+        <h1>How to get Phone information</h1>
+        <p>iPhone: Go to settings, "general", and then "about". Important hardware information can be found by searching the model number online.</p>
+        <br>
+        <p>Android: Go to settings, "System" , and then "About phone" or "about". Alternatively, go to settings and then "About phone". The device name, model, hardware specs, and OS version should all be visible.</p>
+        <h1>The Form</h1>
         <form>
-            <p>Device Model (e.g. iPhone 14)</p>
+            <p>Device Model (e.g. iPhone 14 or Macbook Pro)</p>
             <input type="text" id="device model">
+            <br>
             <p>Are you using Windows 11?</p>
             <input type="checkbox" id="windows11">
+            <br>
             <!-- <p>Operating System Type</p>
             <select name="OS" id="OS">
                 <option value="Windows 11">Windows 11</option>
@@ -45,38 +63,57 @@
                 <option value="Android">Android</option>
                 <option value="other">Other</option>
             </select> -->
-            <p>System type</p>
+            <p>System type (leave blank if unknown)</p>
             <select name="system type" id="system type">
+                <option value="unknown">IDK</option>
                 <option value="x32">x32</option>
                 <option value="x64">x64</option>
                 <option value="x86">x86</option>
             </select>
-            <p>Processor Model (e.g. Intel(R) Core(TM) i7-8550U)</p>
+            <br>
+            <br>
+            <p>Processor Model (e.g. Intel(R) Core(TM) i7-8550U) (refer to "How to get PC Information" or "How to get Phone information" paragraphs above for how to find out this information)</p>
             <input type="text" id="processor">
-            <p>CPU clock speed (GHz)</p>
+            <br>
+            <br>
+            <p>CPU clock speed (GHz) (Many devices don't tell you this information) (Leave blank if unknown)</p>
             <input type="text" id="CPU clock speed">
-            <p>OS Version (leave blank if you don't know) (e.g. "22631.4317")</p>
+            <br>
+            <br>
+            <p>OS Version (e.g. "22631.4317") (refer to "How to get PC Information" or "How to get Phone information" paragraphs above for how to find out this information)</p>
             <input type="text" id="OS version">
+            <br>
+            <br>
             <p>Specify any special software modifications you have made to your computer:</p>
             <input type="text" id="modifications">
-            <p>Website task priority (e.g. "High")</p>
+            <br>
+            <br>
+            <p>Website task priority (e.g. "High") (leave as "Unset" if unknown)</p>
             <select name="website priority" id="website priority">
+                <option value="Unset">Unset</option>
                 <option value="Efficiency Mode">Efficiency Mode</option>
                 <option value="Low">Low</option>
                 <option value="Below Normal">Below Normal</option>
-                <option value="Normal or Unset">Normal or Unset</option>
+                <option value="Normal">Normal</option>
                 <option value="Above Normal">Above Normal</option>
                 <option value="High">High</option>
                 <option value="Realtime">Realtime</option>
             </select>
+            <br>
+            <br>
             <p>Device Age in Years</p>
             <input type="range" id="device age" min="0" max="12" value="2" oninput="this.nextElementSibling.value = this.value">
             <output>2</output>
-            <p>Device RAM in GB</p>
+            <br>
+            <br>
+            <p>Device RAM or Memory in GB (refer to "How to get PC Information" or "How to get Phone information" paragraphs above for how to find out this information)</p>
             <input type="range" id="memory" min="2" max="32" value="8" oninput="this.nextElementSibling.value = this.value">
             <output>8</output>
+            <br>
+            <br>
             <p>Name or Device Name (e.g. DESKTOP-4MC7FUG) (you can put a fake one if you'd like!)</p>
             <input type="text" id="name" minlength="1" maxlength="">
+            <br>
             <br>
             <input type="button" id="run" onclick="runInit()" value="Run">
         </form>

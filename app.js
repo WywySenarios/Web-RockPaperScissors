@@ -143,7 +143,10 @@ app.post('/upload', (req, res) => {
     }
 
     // contextualize some data by adding units
-    data["specs"]["CPU clock speed"] += "GHz";
+    // some people have a habit of adding "GHz" to their information without the server needing to step in!
+    if (data["specs"]["CPU clock speed"].substring(data["specs"]["CPU clock speed"].length - 1 - 3, data["specs"]["CPU clock speed"].length - 1) != "GHz") {
+      data["specs"]["CPU clock speed"] += "GHz";
+    }
     data["specs"]["memory"] += "GB";
 
     // generate a UID for the user's input based on their username & the current time
