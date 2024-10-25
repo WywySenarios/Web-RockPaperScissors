@@ -33,6 +33,7 @@ const childProcess = require("child_process");
 // constants
 const port = 5322;
 const app = express();
+const sleepLength = 100; // sleep length in ms for the client; separation between test cases
 
 app.use(cors()); // allow input from ANY ip address
 app.use(bodyParser.json()); // allow JSON input (related to the POST function)
@@ -50,7 +51,7 @@ app.use(express.urlencoded({
 
 // GET requests for test cases
 function respondTestCases(req, res, numTestCases) {
-  var data = { "Content": randomizeTestCases(numTestCases) };
+  var data = { "Content": randomizeTestCases(numTestCases) , "sleepLength": sleepLength};
 
   console.log("Sending test cases...");
 
@@ -105,7 +106,6 @@ function appendJSON(filePath, incomingIndex, infoToAdd) {
     console.log(`Data (before): ${JSON.stringify(data)}`);
   } catch (error) {
     if (error.code === 'ENOENT') {
-      fs.writeFile(filePath, '{}', (error) => {});
       data = {};
     } else {
       console.log("Oops! Couldn't read the file.");
@@ -127,7 +127,6 @@ function appendJSON(filePath, incomingIndex, infoToAdd) {
 app.post('/upload', (req, res) => {
   // look for the user's info using user-agent s
   let userInfo = (new UAParsing.UAParser(req.headers["user-agent"])).getResult();
-  console.log(`UA info: ${userInfo}`);
   let userID;
 
   try {

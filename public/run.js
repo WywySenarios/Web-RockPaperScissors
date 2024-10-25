@@ -1,7 +1,7 @@
 /*
  * games: [[p1, p2], etc.]
  */
-const sleepLength = 1 // sleep length in ms
+let sleepLength = 0; // sleep length in ms
 let testCases = {
 	"100": null,
 	"1000": null,
@@ -23,6 +23,7 @@ async function serverTestCases(length) {
 
 		const json = await response.json();
 		// console.log(`Received Test Cases ${json["Content"]}`);
+		sleepLength = json["sleepLength"];
 		return await processTestCases(json["Content"]);
 	} catch (error) {
 		console.error(`${error.message}\n\nProceeding to use default test cases...`);
