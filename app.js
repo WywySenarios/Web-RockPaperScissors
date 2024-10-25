@@ -66,9 +66,34 @@ app.get('/testCases/100000', (req, res) => { respondTestCases(req, res, 100000);
 app.get('/testCases/1000000', (req, res) => { respondTestCases(req, res, 1000000); });
 app.get('/testCases/10000000', (req, res) => { respondTestCases(req, res, 10000000); });
 
-app.get('graph', (req, res) => {
-
+app.get('/graph', (req, res) => {
+  let urlparams = new URLSearchParams((new URL("http:localhost:" + port + req.originalUrl)).searchParams);
+  try {
+    sendGraph(req, res, urlparams.get("trialID"), urlparams.get("algorithmName"));
+  } catch(error) {
+    console.log("Error happened when 'sendGraph' function was called");
+    res.write({"content": []});
+    res.status(213);
+    res.end();
+  }
 });
+
+function sendGraph(req, res, trialID, algorithmName) {
+  let masterData = JSON.parse(fs.readFileSync("files\\" + trialID + ".json").toString());
+  let output = Array(0);
+
+  for (const key in masterData) {
+    // runtime & Label (device model)
+    output.push([masterData[key][algorithmName], masterData[key]["specs"]["device model"]]);
+  }
+
+  // sort x axis (rank) by runtime (increasing order)
+  output.sort(function(a, b) {return a[0] - b[0]});
+
+  res.write(JSON.stringify({"content": output}));
+  res.status(200);
+  res.end();
+}
 
 
 // Do NOT use "data" or "type" as the incomingIndex variable
@@ -162,7 +187,7 @@ app.post('/upload', (req, res) => {
   // END setup & run bash file
 
   // Tell client that their data has been successfully sent & stored
-  res.status(204);
+  res.status(201);
   res.end();
 });
 
