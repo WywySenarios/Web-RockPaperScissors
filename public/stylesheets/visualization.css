@@ -1,3 +1,9 @@
+/* Limit chart size */
+.mainContent canvas.chart {
+    max-height: 75vh;
+}
+
+
 /* mobile support */
 
 @media (orientation: portrait) {
