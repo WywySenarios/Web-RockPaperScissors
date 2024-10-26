@@ -39,28 +39,30 @@
         <h1>The Classic Algorithm</h1>
 
         <p>Trial ID ([# test cases].[trial #])</p>
-        <select name="chart1 select" id="chart1 select">
-            <option value="100">100</option>
-            <option value="1000">1000</option>
-            <option value="10000">10000</option>
-            <option value="100000.1">100000.1</option>
-            <option value="100000.2">100000.2</option>
-            <option value="100000.3">100000.3</option>
-            <option value="100000.4">100000.4</option>
-            <option value="100000.5">100000.5</option>
-            <option value="100000.6">100000.6</option>
-            <option value="100000.7">100000.7</option>
-            <option value="100000.8">100000.8</option>
-            <option value="100000.9">100000.9</option>
-            <option value="100000.10">100000.10</option>
-        </select>
-        <select name="chart1 algorithm" id="chart1 algorithm">
-            <option value="standard">standard</option>
-            <option value="optimized">optimized</option>
-            <option value="zeroes">zeroes</option>
-            <option value="polynomial">polynomial</option>
-        </select>
-        <button onclick="chart('chart1')">Regenerate Chart 1</button>
+        <form id="chart1 select">
+            <input type="checkbox" value="100">
+            <input type="checkbox" value="1000">
+            <input type="checkbox" value="10000">
+            <input type="checkbox" value="100000.1">
+            <input type="checkbox" value="100000.2">
+            <input type="checkbox" value="100000.3">
+            <input type="checkbox" value="100000.4">
+            <input type="checkbox" value="100000.5">
+            <input type="checkbox" value="100000.6">
+            <input type="checkbox" value="100000.7">
+            <input type="checkbox" value="100000.8">
+            <input type="checkbox" value="100000.9">
+            <input type="checkbox" value="100000.10">
+
+            <p>Algorithm type</p>
+            <select name="chart1 algorithm" id="chart1 algorithm">
+                <option value="standard">standard</option>
+                <option value="optimized">optimized</option>
+                <option value="zeroes">zeroes</option>
+                <option value="polynomial">polynomial</option>
+            </select>
+        </form>
+        <button onclick="chart('chart1')" action="/" method="POST">Regenerate Chart 1</button>
         <canvas id="chart1"></canvas>
 
         <!-- Thanks to Bory for helping me discover chart.js! It's super useful :) -->
