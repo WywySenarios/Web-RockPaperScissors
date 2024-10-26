@@ -1,6 +1,10 @@
 /*
  * games: [[p1, p2], etc.]
  */
+const progressBar = document.getElementById("status");
+const progressLabel = document.getElementById("statusLabel")
+
+
 let sleepLength = 0; // sleep length in ms
 let testCases = {
 	"100": null,
@@ -70,12 +74,14 @@ async function processTestCases(gamesStr) {
 }
 
 async function runInit() {
-	testCases["100"] = await serverTestCases("100");
-	testCases["1000"] = await serverTestCases("1000");
-	testCases["10000"] = await serverTestCases("10000");
-	testCases["100000"] = await serverTestCases("100000");
-	testCases["1000000"] = await serverTestCases("1000000");
+	progressLabel.innerHTML = "Grabbing Server Test Cases...";
+	let testCasesToGrab = ["100", "1000", "10000", "100000", "1000000"];
+	for (const i of testCasesToGrab) {
+		progressLabel.innerHTML = "Grabbing Test Case for " + i + " cases trial...";
+		testCases[i] = await serverTestCases(i);
+	}
 
+	progressLabel.innerHTML = "Grabbing Specs...";
 	let results = await {
 		"specs": {
 			"device model": document.getElementById("device model").value,
@@ -115,17 +121,20 @@ async function runInit() {
 		"1000000.10": await run("1000000", ".10")
 	}
 
+	progressLabel.innerHTML = "Gathering Results...";
+
 	// send results to server
 	console.log("Data to send: " + JSON.stringify(results));
 
 	// user self-reports using Windows 11 instead of 10?
 	console.log(document.getElementById("windows11").value);
-	if (document.getElementById("windows11").value == true) {
+	if (document.getElementById("windows11").checked == true) {
 		results["os"] = {
-			"name": "Windows",
-			"version": "11"
+			"name": "Windows 11"
 		};
 	}
+
+	progressLabel.innerHTML = "Sending Results to Server...";
 
 	fetch("/upload", {
 		method: "POST",
@@ -134,6 +143,8 @@ async function runInit() {
 			"Content-type": "application/json; charset=UTF-8"
 		}
 	});
+
+	progressLabel.innerHTML = "Done!";
 }
 
 // run all algorithms in a random order with "games" as the test cases
@@ -169,6 +180,7 @@ async function run(numTestCases, elementName) {
 		if (algorithms[index] == null) {
 			continue;
 		} else {
+			progressLabel.innerHTML = "Testing " + algorithms[index][0] + " algorithm with " + numTestCases + " cases";
 			console.log(`Testing algorithm: ${algorithms[index][0]}`);
 			currentLength--;
 		}
@@ -182,7 +194,10 @@ async function run(numTestCases, elementName) {
 		// console.log(`Output: ${output}`);
 		userOutput = document.getElementById(algorithms[index][0] + numTestCases + elementName);
 		console.log(algorithms[index][0] + numTestCases + elementName);
-		userOutput.innerHTML = output[0];
+		// tell user that the program is running!
+		userOutput.innerHTML = output[0]; // runtime result
+		progressBar.value = parseInt(progressBar.value) + 1;
+
 		results["runtime"][algorithms[index][0]] = output[0];
 		results["executionResults"][algorithms[index][0]] = output[1];
 		if (await ! await delete algorithms[index]) {
