@@ -288,7 +288,7 @@ async function RPSzeroes(games) {
 			results.push(0);
 		} else if ((game - 13) * (game - 21) * (game - 32) == 0) { // P1 wins
 			results.push(1);
-		} else {
+		} else { // P2 wins
 			results.push(2);
 		}
 	}
